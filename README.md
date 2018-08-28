@@ -1,2 +1,2 @@
 # COP4331C_Project_One
-Team Members: David Maria, Klayton Killough, Alexander Franco, Sara Frackiewicz, Soukaina Assou, Emil Dolorfino, Baylor Maloney
+Team Members: David Maria, Klayton Killough, Alexander Franco, Sara Frackiewicz, Soukaina Assou, Emil Dolorfino, Baylor Maloney, Kristoff Kounlavong
