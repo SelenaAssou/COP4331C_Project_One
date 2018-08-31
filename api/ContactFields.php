@@ -4,6 +4,9 @@
  * Class ContactFields Holds the enumerations of the strings for the database fields.
  * Meant to be used for common checking and usage.
  */
+
+require "SplType.php";
+
 class ContactFields extends SplEnum
 {
     const UNKNOWN = "unknown";

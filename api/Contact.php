@@ -143,17 +143,16 @@ class Contact
             return $retArr;
     }
 
-    /** Returns a JSON representation of the contact.
-     *  @return string|null JSON formatted string of the contact. if the contact cant pass validation, returns null. <br/>
-     * <b>null fields will not be included in the JSON. </b>
+    /**
+     * Returns an array representation of all the fields inside the contact.
+     * @return array|null All fields of the contact in array format. If the contact cannot pass validation, reutrns null.
      */
-    public function convertToJson(){
+    public function convertToArray(){
         if ($this->isValid())
-            return json_encode(get_object_vars($this));
-        else
+            return get_object_vars($this);
+                else
             return null;
     }
-
 
 
     ///////////Getters///////////////
