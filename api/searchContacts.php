@@ -19,15 +19,12 @@ if (is_null($xhrRequest)){
     returnError(null);
 } else {
 
-    // get and sanitize fields
-    $requestFirstName = filter_var($xhrRequest[ContactFields::FIRST_NAME],FILTER_SANITIZE_STRING);
-    $requestLastName = filter_var($xhrRequest[ContactFields::LAST_NAME],FILTER_SANITIZE_STRING);
-    $requestOwnerID = filter_var($xhrRequest[ContactFields::OWNER_ID],FILTER_SANITIZE_NUMBER_INT);
+    // get and prepare fields for SQL query
+    $requestFirstName = '%' . $xhrRequest[ContactFields::FIRST_NAME] . '%';
+    $requestLastName = '%' . $xhrRequest[ContactFields::LAST_NAME] . '%';
+    $requestOwnerID = $xhrRequest[ContactFields::OWNER_ID];
 
     // search database for contacts based on info provided
-
-//    SELECT * FROM `contacts` WHERE `firstName` LIKE '%k%' AND `lastName` LIKE '%kill%' AND `ownerID` = 3
-    $sqlQuery = "SELECT * FROM `contacts` where $firstNameHeader LIKE '%$requestFirstName%' AND $lastNameHeader LIKE '%$requestLastName%' AND $ownerHeader = $requestOwnerID";
 
     $sqlConnection  = new mysqli('localhost' ,dbinfo::$dbUser, dbInfo::$dbPass, dbInfo::$db);
     if ($sqlConnection->connect_error) {
@@ -38,7 +35,12 @@ if (is_null($xhrRequest)){
     //connection established, begin query and grab the data
 
     /** @var mysqli_result $sqlResult */
-    $sqlResult = $sqlConnection->query($sqlQuery);
+    $sqlQuery = "SELECT * FROM `contacts` where $firstNameHeader LIKE ? and $lastNameHeader LIKE ?  AND $ownerHeader = ? ";
+    $sqlTest = $sqlConnection->prepare($sqlQuery);
+    $sqlTest->bind_param('ssi', $requestFirstName, $requestLastName, $requestOwnerID);
+    $sqlTest->execute();
+    $sqlResult = $sqlTest->get_result();
+
     if (is_bool($sqlResult)){
         error_log("sql query failed : $sqlQuery");
         exit();
@@ -60,13 +62,3 @@ function returnError($errorCode){
     returnXhrRequestAsJson(array("error occurred"));
     exit();
 }
-
-
-
-
-
-
-
-
-
-

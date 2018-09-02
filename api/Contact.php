@@ -319,14 +319,4 @@ class Contact
     {
         $this->ownerID = $ownerID;
     }
-
-
-
-
-
-
-
-
-
-
 }
