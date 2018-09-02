@@ -24,7 +24,7 @@ function getXhrRequestInfo(){
  * For best results, should be an <b>assoc array</b>.
  */
 function returnXhrRequestAsJson($obj){
-    $jsonObj = json_encode($obj, JSON_FORCE_OBJECT);
+    $jsonObj = json_encode($obj,JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES|JSON_NUMERIC_CHECK);
     header('Content-type: application/json');
     echo $jsonObj;
 }
