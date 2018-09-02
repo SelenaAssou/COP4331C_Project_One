@@ -32,28 +32,35 @@ if (is_null($xhrRequest)){
         returnError(null);
     }
 
+    //log any error that occurs
+    mysqli_report(MYSQLI_REPORT_ERROR);
+
     //connection established, begin query and grab the data
+    try {
+        /** @var mysqli_result $sqlResult */
+        $sqlQuery = "SELECT * FROM `contacts` where $firstNameHeader LIKE ? and $lastNameHeader LIKE ?  AND $ownerHeader = ? ";
+        $sqlStmt = $sqlConnection->prepare($sqlQuery);
+        $sqlStmt->bind_param('ssi', $requestFirstName, $requestLastName, $requestOwnerID);
+        $sqlStmt->execute();
+        $sqlResult = $sqlStmt->get_result();
 
-    /** @var mysqli_result $sqlResult */
-    $sqlQuery = "SELECT * FROM `contacts` where $firstNameHeader LIKE ? and $lastNameHeader LIKE ?  AND $ownerHeader = ? ";
-    $sqlTest = $sqlConnection->prepare($sqlQuery);
-    $sqlTest->bind_param('ssi', $requestFirstName, $requestLastName, $requestOwnerID);
-    $sqlTest->execute();
-    $sqlResult = $sqlTest->get_result();
-
-    if (is_bool($sqlResult)){
-        error_log("sql query failed : $sqlQuery");
-        exit();
-    }
-    $contacts = Contact::convertFromSQL($sqlResult);
-    $returnArr = array();
-    /** @var Contact $contact */
-    foreach ($contacts as $contact ){
+        if (is_bool($sqlResult)) {
+            error_log("sql query failed : $sqlQuery");
+            exit();
+        }
+        $contacts = Contact::convertFromSQL($sqlResult);
+        $returnArr = array();
+        /** @var Contact $contact */
+        foreach ($contacts as $contact) {
 //        error_log($contact->convertToArray());
-        $returnArr[] = $contact->convertToArray();
-    }
+            $returnArr[] = $contact->convertToArray();
+        }
 
-    returnXhrRequestAsJson($returnArr);
+        returnXhrRequestAsJson($returnArr);
+    } catch (Exception $exception){
+        error_log("Exception occurred during Request handling: " . $exception->getMessage());
+        returnError(null);
+    }
 }
 
 
