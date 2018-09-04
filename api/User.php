@@ -9,7 +9,7 @@ class User
     //user fields
     private $id = null, //int
             $username = null, //string
-            $pass = null, //string
+            $pass = null; //string
 
 
     /**
@@ -17,7 +17,7 @@ class User
      * @param $id int
      * @param $username string
      * @param $pass string
-     */
+     **/
     public function __construct($id, $username, $pass)
     {
         $this->id = $id;
@@ -44,7 +44,7 @@ class User
                 $retArr[] = new User(
                     $row[UserFields::ID],
                     self::convertEmptyStringToNull($row[UserFields::USERNAME]),
-                    self::convertEmptyStringToNull($row[UserFields::PASSWORD]),
+                    self::convertEmptyStringToNull($row[UserFields::PASSWORD])
                 );
             }
         } catch (Exception $ex){
