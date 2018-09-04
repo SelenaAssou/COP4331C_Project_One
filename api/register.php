@@ -32,7 +32,7 @@ if (is_null($xhrRequest)){
     }
 
     //log any error that occurs
-    mysqli_report(MYSQLI_REPORT_ERROR);
+    mysqli_report(MYSQLI_REPORT_ERROR|MYSQLI_REPORT_STRICT);
 
     //connection established, begin query and grab the data
     try {
