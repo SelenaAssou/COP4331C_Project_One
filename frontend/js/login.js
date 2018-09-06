@@ -4,18 +4,10 @@ var extension = "php";
 var userId = 0;
 var firstName = "";
 var lastName = "";
+//var jsonContactsObject;
 
-
-$('.nav-tabs a[href="#login-form"]').click(function () {
-  $(this).tab('show');
-  $('.nav-tabs a[href="#register-form"]').tab('hide')
-})
-$('.nav-tabs a[href="#register-form"]').click(function () {
-  $(this).tab('show');
-  $('.nav-tabs a[href="#login-form"]').tab('hide')
-})
-
-function doLogin() {
+function doLogin() 
+{
   document.getElementById("introsection").style.visibility = "hidden";
   document.getElementById("introsection").style.display = "none";
   document.getElementById("contactGroup").style.visibility = "visible";
@@ -69,9 +61,55 @@ function doLogin() {
   // 	document.getElementById("loginResult").innerHTML = err.message;
   // }
 
+  //getAllContacts()
+
 }
 
-function doLogout() {
+function TEST()
+{
+  var table = document.getElementById("contactTable");
+  $(table).find('tbody').append( "<tr class='success'><td>fname</td><td>lname</td><td>email</td><td>407-666-6666</td><td>orlando</td><td>fl</td><td>32828</td><td>Friend</td><td> <button type='button' onclick='Delete()'>Delete!</button> </td></tr>");
+}
+
+// function getAllContacts()
+// {
+
+// // send sql request for all contacts... however u do that...
+//   var jsonPayload = '{"search all"}';
+//   var url = urlBase + '/searchContacts.' + extension;
+
+//   var xhr = new XMLHttpRequest();
+//   xhr.open("POST", url, false);
+//   xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+//   try
+//   {
+//     xhr.send(jsonPayload);
+
+//     jsonContactsObject = JSON.parse( xhr.responseText );
+
+//     var contactType = jsonContactsObject.contactType;
+
+//     var table = document.getElementById("contactTable");
+//     if(contactType == "Friend")
+//       $(table).find('tbody').append( "<tr class='success'><td>jsonContactsObject.firstName</td><td>jsonContactsObject.lastName</td><td>jsonContactsObject.email</td><td>jsonContactsObject.phoneNumber</td><td>jsonContactsObject.city</td><td>jsonContactsObject.state</td><td>jsonContactsObject.zip</td><td>contactType</td><button type='button' onclick='Delete()'>Delete!</button> </td></tr>" );
+//     else if(contactType == "Foe")
+//       $(table).find('tbody').append( "<tr class='danger'><td>jsonContactsObject.firstName</td><td>jsonContactsObject.lastName</td><td>jsonContactsObject.email</td><td>jsonContactsObject.phoneNumber</td><td>jsonContactsObject.city</td><td>jsonContactsObject.state</td><td>jsonContactsObject.zip</td><td>contactType</td><button type='button' onclick='Delete()'>Delete!</button> </td></tr>" );
+//     else if(contactType == "Coworker")
+//       $(table).find('tbody').append( "<tr class='info'><td>jsonContactsObject.firstName</td><td>jsonContactsObject.lastName</td><td>jsonContactsObject.email</td><td>jsonContactsObject.phoneNumber</td><td>jsonContactsObject.city</td><td>jsonContactsObject.state</td><td>jsonContactsObject.zip</td><td>contactType</td><button type='button' onclick='Delete()'>Delete!</button> </td></tr>" );
+//     else if(contactType == "Family")
+//       $(table).find('tbody').append( "<tr class='warning'><td>jsonContactsObject.firstName</td><td>jsonContactsObject.lastName</td><td>jsonContactsObject.email</td><td>jsonContactsObject.phoneNumber</td><td>jsonContactsObject.city</td><td>jsonContactsObject.state</td><td>jsonContactsObject.zip</td><td>contactType</td><button type='button' onclick='Delete()'>Delete!</button> </td></tr>" );
+//     else
+//       $(table).find('tbody').append( "<tr class='active'><td>jsonContactsObject.firstName</td><td>jsonContactsObject.lastName</td><td>jsonContactsObject.email</td><td>jsonContactsObject.phoneNumber</td><td>jsonContactsObject.city</td><td>jsonContactsObject.state</td><td>jsonContactsObject.zip</td><td>contactType</td><button type='button' onclick='Delete()'>Delete!</button> </td></tr>" );
+
+//   }
+//   catch(err)
+//   {
+    
+//   }
+// }
+
+function doLogout() 
+{
   userId = 0;
   firstName = "";
   lastName = "";
@@ -82,6 +120,26 @@ function doLogout() {
   document.getElementById("contactGroup").style.display = "none";
 }
 
-function doRegister() {
-
+function doRegister() 
+{
 }
+
+function search()
+{
+  document.getElementById("searchTable").style.visibility = "visible";
+  document.getElementById("searchTable").style.display = "block";
+  document.getElementById("resultMessage").style.visibility = "visible";
+  document.getElementById("resultMessage").style.display = "block";
+}
+
+function addContact()
+{
+    alert("Contact Added!")
+}
+
+// function Delete(contactID)
+// {
+//   alert("contact id is " + contactID)
+
+//   // send contact id to be deleteds
+// }
