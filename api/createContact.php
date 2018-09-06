@@ -25,7 +25,7 @@
         $xOwnerID = $xhrRequest[ContactFields::OWNER_ID];
 
         // Connect to database
-        $sqlConnection = new mysqli('localhost', dbinfo::$dbuser, dbinfo::$dbpass, dbinfo::$db);
+        $sqlConnection = new mysqli('localhost', dbinfo::$dbUser, dbinfo::$dbPass, dbinfo::$db);
         if ($sqlConnection->connect_error) {
             error_log($sqlConnection->connect_error);
             returnError(null);
@@ -39,7 +39,7 @@
         try {
             $sqlQuery = "INSERT INTO `contacts` (`id`, `firstName`, `lastName`, `email`, `phoneNumber`, 
                         `contactType`, `city`, `state`, `zip`, `ownerID`) VALUES 
-                        (NULL, ?, ?, ?, ?, ?, ?, ?, ?);";
+                        (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
             $sqlStmt = $sqlConnection->prepare($sqlQuery);
             
             // Bind Parameters
