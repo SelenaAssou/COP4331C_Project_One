@@ -37,12 +37,7 @@
 
             if ($success) {
                 $returnArr = array("success" => 1);
-            }
-            // Duplicate Contact Error
-            elseif (strpos(mysqli_error($sqlConnection), "Duplicate entry") !== false) {
-                $returnArr = array("success" => 0);
-            } 
-            else {
+            } else {
                 $returnArr = array("success" => -1);
             } 
 
