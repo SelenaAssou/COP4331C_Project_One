@@ -14,7 +14,7 @@
     else {
 
         // Get and prepare fields for SQL Query
-        $xID = $xhrRequest[ContactFields::ID]
+        $xID = $xhrRequest[ContactFields::ID];
         $xFirstName = $xhrRequest[ContactFields::FIRST_NAME];
         $xLastName = $xhrRequest[ContactFields::LAST_NAME];
         $xEmail = $xhrRequest[ContactFields::EMAIL];
