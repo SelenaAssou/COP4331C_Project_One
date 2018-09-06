@@ -1,7 +1,8 @@
-var urlBase = 'http://poosgroup5-u.cf/';
-var extension = "php";
 
-var userId = 2;
+var urlBase = 'https://poosgroup5-u.cf/';
+var extension = 'php';
+
+var userId = 0;
 var firstName = "";
 var lastName = "";
 
@@ -12,11 +13,11 @@ function doLogin()
   document.getElementById("contactGroup").style.visibility = "visible";
   document.getElementById("contactGroup").style.display = "block";
 
-  userId = 2;
+  userId = 0;
   firstName = "";
   lastName = "";
 
-  /*	var login = document.getElementById("username").value;
+  /*  var login = document.getElementById("username").value;
     var password = document.getElementById("password").value;
 
     document.getElementById("loginResult").innerHTML = "";
@@ -57,7 +58,7 @@ function doLogin()
   // }
   // catch(err)
   // {
-  // 	document.getElementById("loginResult").innerHTML = err.message;
+  //  document.getElementById("loginResult").innerHTML = err.message;
   // }
 
   getAllContacts()
@@ -66,10 +67,9 @@ function doLogin()
 
 function getAllContacts()
 {
-
 // send sql request for all contacts... however u do that...
-  var jsonPayload = '{"ownerID" : "2"}';
-  var url = urlBase + '/api/searchContacts.' + extension;
+  var jsonPayload = '{"ownerID":"2"}';
+  var url = urlBase + 'api/searchContacts.' + extension;
 
   var xhr = new XMLHttpRequest();
   xhr.open("POST", url, false);
@@ -77,31 +77,38 @@ function getAllContacts()
   try
   {
     xhr.send(jsonPayload);
-
     var JSONObjectsArr = JSON.parse( xhr.responseText );
+
     JSONObjectsArr.forEach(addRowOnTable)
 
   }
   catch(err)
   {
-    
+    alert("ERRRRRRRRROOOOOOOORRRRRRRRRRRR!")
   }
 }
 
 function addRowOnTable(item, index)
 {
-        var contactType = item.contactType;
-      var table = document.getElementById("contactTable");
+    var contactType = item.contactType;
+    var table = document.getElementById("contactTable");
     if(contactType == "Friend")
-      $(table).find('tbody').append( "<tr class='success'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><button type='button'>Delete!</button> </td></tr>");
-    else if(contactType == "Foe")
-      $(table).find('tbody').append( "<tr class='danger'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><button type='button'>Delete!</button> </td></tr>");
-    else if(contactType == "Coworker")
-      $(table).find('tbody').append( "<tr class='info'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><button type='button'>Delete!</button> </td></tr>");
-    else if(contactType == "Family")
-      $(table).find('tbody').append( "<tr class='warning'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><button type='button'>Delete!</button> </td></tr>" );
+    {
+      $(table).find('tbody').append( "<tr class='success'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button'>Delete!</button> </td></tr>"); 
+    }
+    else if(contactType == "Foe"){
+      $(table).find('tbody').append( "<tr class='danger'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button'>Delete!</button> </td></tr>");
+    }
+    else if(contactType == "Coworker"){
+      $(table).find('tbody').append( "<tr class='info'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button'>Delete!</button> </td></tr>");
+    }
+    else if(contactType == "Family"){
+      $(table).find('tbody').append( "<tr class='warning'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button'>Delete!</button> </td></tr>" );
+    }
     else
-      $(table).find('tbody').append( "<tr class='active'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><button type='button'>Delete!</button> </td></tr>" );
+    {
+      $(table).find('tbody').append( "<tr class='active'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button'>Delete!</button> </td></tr>" );
+    }
 
       $(table).find('tbody').on("click", "button", function(){
     Delete(item.id);
@@ -130,6 +137,25 @@ function search()
   document.getElementById("searchTable").style.display = "block";
   document.getElementById("resultMessage").style.visibility = "visible";
   document.getElementById("resultMessage").style.display = "block";
+
+  var jsonPayload = '{"ownerID":"2"}';
+  var url = urlBase + 'api/searchContacts.' + extension;
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", url, false);
+  xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+  try
+  {
+    xhr.send(jsonPayload);
+    var JSONObjectsArr = JSON.parse( xhr.responseText );
+
+    JSONObjectsArr.forEach(addRowOnTable)
+
+  }
+  catch(err)
+  {
+    alert("ERRRRRRRRROOOOOOOORRRRRRRRRRRR!")
+  }
 }
 
 function addContact()
