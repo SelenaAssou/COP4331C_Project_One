@@ -13,7 +13,7 @@ class UserFields extends SplEnum
     const __default = self::UNKNOWN;
 
     const ID = "id";
-    const USERNAME = "user";
-    const PASSWORD = "pass";
+    const USERNAME = "username";
+    const PASSWORD = "password";
 
 }
