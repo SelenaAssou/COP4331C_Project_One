@@ -6,7 +6,7 @@ var firstName = "";
 var lastName = "";
 //var jsonContactsObject;
 
-function doLogin() 
+function doLogin()
 {
   document.getElementById("introsection").style.visibility = "hidden";
   document.getElementById("introsection").style.display = "none";
@@ -105,11 +105,11 @@ function getAllContacts()
   }
   catch(err)
   {
-    
+
   }
 }
 
-function doLogout() 
+function doLogout()
 {
   userId = 0;
   firstName = "";
@@ -121,7 +121,7 @@ function doLogout()
   document.getElementById("contactGroup").style.display = "none";
 }
 
-function doRegister() 
+function doRegister()
 {
 }
 

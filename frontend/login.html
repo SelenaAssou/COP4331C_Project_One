@@ -1,24 +1,37 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8"/>
-	<link href="css/test.css" rel="stylesheet" id="design-css">
-	<link href="css/bootstrap.css" rel="stylesheet" id="bootstrap-css">
-	<script src="js/login.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
+<html lang="en">
 
-<div class="jumbotron">
-	<h1><center>Contact Book</center></h1>
-	<p><center>Keep track of everyone you know! Not creepy at all! </center></p>
-</div>
+  <head>
+    <meta charset="utf-8"/>
 
-<div class="alert alert-success" hidden="true" id="loginResult">
-  <strong>Success!</strong> Welcome!
-</div>
+    <!-- browser info -->
+    <title>Contact Book</title>
+    <link rel="icon" href="img/icon3.svg">
+
+    <!-- css -->
+    <link href="css/bootstrap.css" rel="stylesheet" id="bootstrap-css">
+    <link href="css/login.css" rel="stylesheet" id="design-css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
+
+
+    <!-- js -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/login.js"></script>
+  </head>
+
+  <div class="jumbotron">
+    <h1 style="text-align: center">Contact Book</h1>
+    <!-- <p style="text-align: center"> Keep track of everyone you know! Not creepy at all!</p> -->
+  </div>
+
+  <div class="alert alert-success" hidden="true" id="loginResult">
+    <strong>Success!</strong>
+    Welcome!
+  </div>
 
 <body>
+	<div class="container-fluid">
 	<div id="introsection" style="display:block; visibility:visible;">
     	<div class="row">
 			<div class="col-md-6 col-md-offset-3">
@@ -37,10 +50,10 @@
 								<div class="tab-content">
 									<form id="login-form" class="tab-pane fade in active">
 										<div class="form-group">
-											<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+											<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" required autofocus>
 										</div>
 										<div class="form-group">
-											<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+											<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" required>
 										</div>
 										<div class="form-group">
 											<div class="row">
@@ -52,13 +65,13 @@
 									</form>
 									<form id="register-form" class="tab-pane fade">
 										<div class="form-group">
-											<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+											<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" required autofocus>
 										</div>
 										<div class="form-group">
-											<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
+											<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" required>
 										</div>
 										<div class="form-group">
-											<input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password">
+											<input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password" required>
 										</div>
 										<div class="form-group">
 											<div class="row">
@@ -111,8 +124,8 @@
 											</thead>
 											<tbody id="tableBody">
 											</tbody>
-										</table> 
-										
+										</table>
+
 										<div class="form-group">
 											<div class="row">
 												<div class="col-sm-6 col-sm-offset-3">
@@ -197,7 +210,7 @@
 											</thead>
 											<tbody id="tableBody">
 											</tbody>
-										</table> 
+										</table>
 									</form>
 									<form id="logout" class="tab-pane fade">
 										<div class="form-group">
@@ -215,5 +228,6 @@
 				</div>
 			</div>
 		</div>
+	</div>
 </body>
 </html>
