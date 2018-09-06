@@ -27,10 +27,10 @@
         
         // Connection established. Begin query to delete data.
         try {
-            $sqlQuery = "DELETE FROM `contacts` WHERE `id` = ?;";
+            $sqlQuery = "DELETE FROM `contacts` WHERE `id` = ? AND `ownerID` = ?;";
             $sqlStmt = $sqlConnection->prepare($sqlQuery);
 
-            $sqlStmt->bind_param("i", $xID);
+            $sqlStmt->bind_param("ii", $xID, $xOwnerID);
 
             // Execute SQL Statement
             $success = $sqlStmt->execute();
