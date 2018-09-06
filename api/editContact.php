@@ -14,6 +14,7 @@
     else {
 
         // Get and prepare fields for SQL Query
+        $xID = $xhrRequest[ContactFields::ID]
         $xFirstName = $xhrRequest[ContactFields::FIRST_NAME];
         $xLastName = $xhrRequest[ContactFields::LAST_NAME];
         $xEmail = $xhrRequest[ContactFields::EMAIL];
@@ -37,21 +38,15 @@
         // Connection established. Begin query and try to store data
 
         try {
-            $sqlQuery = "INSERT INTO `contacts` (`id`, `firstName`, `lastName`, `email`, `phoneNumber`, 
-                        `contactType`, `city`, `state`, `zip`, `ownerID`) VALUES 
-                        (NULL, ?, ?, ?, ?, ?, ?, ?, ?);";
+            $sqlQuery = "UPDATE `contacts` SET `firstName`= ?,`lastName`= ?,
+                        `email`= ?,`phoneNumber`= ?,`contactType`= ?,`city`= ?,
+                        `state`= ?,`zip`= ? WHERE `ownerID` = ? AND `id` = ?;";
             $sqlStmt = $sqlConnection->prepare($sqlQuery);
             
             // Bind Parameters
-            $sqlStmt->bind_param("s", $xFirstName);
-            $sqlStmt->bind_param("s", $xLastName);
-            $sqlStmt->bind_param("s", $xEmail);
-            $sqlStmt->bind_param("s", $xPhone);
-            $sqlStmt->bind_param("s", $xContactType);
-            $sqlStmt->bind_param("s", $xCity);
-            $sqlStmt->bind_param("s", $xState);
-            $sqlStmt->bind_param("i", $xZip);
-            $sqlStmt->bind_param("i", $xOwnerID);
+            $sqlStmt->bind_param("sssssssiii", $xFirstName, $xLastName, $xEmail,
+                                $xPhone, $xContactType, $xCity, $xState, $xZip,
+                                $xOwnerID, $xID);
             
             // Execute SQL Statement
             $success = $sqlStmt->execute();

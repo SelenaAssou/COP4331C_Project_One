@@ -43,7 +43,7 @@
 
             returnXhrRequestAsJson($returnArr);
         }
-        catch {
+        catch (Exception $exception) {
             error_log("Exception occured during Request handling: " . $exception->getMessage());
             returnError(null);
         }
