@@ -1,8 +1,8 @@
 <?php
 
-    require 'Contact.php'
-    require 'supportFunctions.php'
-    require 'dbInfo.cfg.php'
+    require 'Contact.php';
+    require 'supportFunctions.php';
+    require 'dbInfo.cfg.php';
 
     // Get and sanitize xhr data
     $xhrRequest = getXhrRequestInfo();
@@ -12,8 +12,8 @@
     }
     else {
         // Get and prepare fields for SQL query
-        $xID = '%' . $xhrRequest[ContactFields::ID] . '%';
-        $xOwnerID = '%' . $xhrRequest[ContactFields::OWNER_ID] . '%';
+        $xID = $xhrRequest[ContactFields::ID];
+        $xOwnerID = $xhrRequest[ContactFields::OWNER_ID];
 
         // Connect to database to search
         $sqlConnection = new mysqli('localhost', dbinfo::$dbuser, dbinfo::$dbpass, dbinfo::$db);
@@ -27,10 +27,10 @@
         
         // Connection established. Begin query to delete data.
         try {
-            $sqlQuery = "DELETE FROM `contacts` WHERE `contacts`.`id` = ?;";
+            $sqlQuery = "DELETE FROM `contacts` WHERE `id` = ?;";
             $sqlStmt = $sqlConnection->prepare($sqlQuery);
 
-            $sqlStmt->bind_param('id', $xID);
+            $sqlStmt->bind_param("i", $xID);
 
             // Execute SQL Statement
             $success = $sqlStmt->execute();
