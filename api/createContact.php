@@ -37,8 +37,8 @@
         // Connection established. Begin query and try to store data
 
         try {
-            $sqlQuery = "INSERT INTO 'contacts' ('id', 'firstName', 'lastName', 'email', 'phoneNumber', 
-                        'contactType', 'city', 'state', 'zip', 'ownerID') VALUES 
+            $sqlQuery = "INSERT INTO `contacts` (`id`, `firstName`, `lastName`, `email`, `phoneNumber`, 
+                        `contactType`, `city`, `state`, `zip`, `ownerID`) VALUES 
                         (NULL, ?, ?, ?, ?, ?, ?, ?, ?);";
             $sqlStmt = $sqlConnection->prepare($sqlQuery);
             
