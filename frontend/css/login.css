@@ -13,6 +13,18 @@ body {
   background-size: cover;
 }
 
+/* form highlight */
+.form-control:focus {
+  border-color: #64D586;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(100, 213, 134, 0.6);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(100, 213, 134, 0.6);
+}
+
+.table {
+  white-space: nowrap;
+}
+
 /* .panel {
   background-color: #ffffffcc;
 }
@@ -71,7 +83,7 @@ body {
   transition: all 0.1s linear;
 }
 
-.btn-login {
+.btn-login, .btn-login:focus {
   background-color: #1CB94E;
   outline: none;
   color: #fff;
@@ -83,26 +95,12 @@ body {
   border-color: #1CB94A;
 }
 
-.btn-login:hover, .btn-login:focus {
+.btn-login:hover {
   color: #fff;
-  background-color: #1CA347;
-  border-color: #1CA347;
+  background-color: #049D32;
 }
 
-.btn-register {
-  background-color: #1CB94E;
-  outline: none;
+.btn-login:active {
   color: #fff;
-  font-size: 14px;
-  height: auto;
-  font-weight: normal;
-  padding: 14px 0;
-  text-transform: uppercase;
-  border-color: #1CB94A;
-}
-
-.btn-register:hover, .btn-register:focus {
-  color: #fff;
-  background-color: #1CA347;
-  border-color: #1CA347;
+  background-color: #007C25;
 }
