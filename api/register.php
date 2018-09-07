@@ -32,11 +32,11 @@ if (is_null($xhrRequest)){
     }
 
     //log any error that occurs
-    mysqli_report(MYSQLI_REPORT_ERROR|MYSQLI_REPORT_STRICT);
+    mysqli_report(MYSQLI_REPORT_ERROR);
 
     //connection established, begin query and grab the data
     try {
-        $sqlQuery = "INSERT INTO `users` (user, pass) VALUES (?, ?);";
+        $sqlQuery = "INSERT INTO `users` (username, password) VALUES (?, ?);";
         $sqlStmt = $sqlConnection->prepare($sqlQuery);
         $sqlStmt->bind_param('ss', $requestUsername, $hashedPassword);
         $success = $sqlStmt->execute();
