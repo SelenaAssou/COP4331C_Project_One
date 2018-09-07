@@ -2,9 +2,10 @@
 var urlBase = 'https://poosgroup5-u.cf/';
 var extension = 'php';
 
-var userId = 0;
+var ownerId = 0;
 var firstName = "";
 var lastName = "";
+var buttonID = 0;
 
 function doLogin() 
 {
@@ -13,7 +14,7 @@ function doLogin()
   document.getElementById("contactGroup").style.visibility = "visible";
   document.getElementById("contactGroup").style.display = "block";
 
-  userId = 0;
+  ownerId = 0;
   firstName = "";
   lastName = "";
 
@@ -84,7 +85,7 @@ function getAllContacts()
   }
   catch(err)
   {
-    alert("ERRRRRRRRROOOOOOOORRRRRRRRRRRR!")
+    alert(err.message)
   }
 }
 
@@ -94,25 +95,26 @@ function addRowOnTable(item, index)
     var table = document.getElementById("contactTable");
     if(contactType == "Friend")
     {
-      $(table).find('tbody').append( "<tr class='success'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button'>Delete!</button> </td></tr>"); 
+      $(table).find('tbody').append( "<tr class='success'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button' id='button" + buttonID +"'>Delete!</button> </td></tr>"); 
     }
     else if(contactType == "Foe"){
-      $(table).find('tbody').append( "<tr class='danger'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button'>Delete!</button> </td></tr>");
+      $(table).find('tbody').append( "<tr class='danger'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button' id='button" + buttonID +"'>Delete!</button> </td></tr>");
     }
     else if(contactType == "Coworker"){
-      $(table).find('tbody').append( "<tr class='info'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button'>Delete!</button> </td></tr>");
+      $(table).find('tbody').append( "<tr class='info'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button' id='button" + buttonID +"'>Delete!</button> </td></tr>");
     }
     else if(contactType == "Family"){
-      $(table).find('tbody').append( "<tr class='warning'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button'>Delete!</button> </td></tr>" );
+      $(table).find('tbody').append( "<tr class='warning'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button' id='button" + buttonID +"'>Delete!</button> </td></tr>" );
     }
     else
     {
-      $(table).find('tbody').append( "<tr class='active'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button'>Delete!</button> </td></tr>" );
+      $(table).find('tbody').append( "<tr class='active'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button' id='button" + buttonID +"'>Delete!</button> </td></tr>" );
     }
 
-      $(table).find('tbody').on("click", "button", function(){
-    Delete(item.id);
-});
+    var btn = document.getElementById("button" + buttonID);
+    btn.onclick = function(){Delete(item.id)};
+
+    buttonID = buttonID + 1;
 }
 
 function doLogout() 
@@ -154,7 +156,7 @@ function search()
   }
   catch(err)
   {
-    alert("ERRRRRRRRROOOOOOOORRRRRRRRRRRR!")
+    alert(err.message)
   }
 }
 
