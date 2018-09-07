@@ -33,19 +33,19 @@ if (is_null($xhrRequest)){
     // connection established, begin query and grab data
     try {
         /** @var mysqli_result $sqlResult */
-        $sqlQuery = "SELECT $idHeader FROM `users` WHERE $usernameHeader LIKE ? and $passwordHeader LIKE ?";
+        $sqlQuery = "SELECT $idHeader FROM `users` WHERE $usernameHeader = ? and $passwordHeader = ?";
         $sqlStmt = $sqlConnection->prepare($sqlQuery);
         $sqlStmt->bind_param('ss', $requestUsername, $hashedPassword);
         $sqlStmt->execute();
         $sqlResult = $sqlStmt->get_result();
-
+        $user = User::convertFromSQL($sqlResult);
+        
         if (mysqli_num_rows($sqlResult) == 0) {
-            $returnArr = array("login not found" -> -1);
+            $returnArr = array("id" => -1);
         }
         
-        $user = User::convertFromSQL($sqlResult);
         else {
-            $returnArr = array($user->$id);
+            $returnArr = array("id" => $user[0]->getID());
         }
 
         returnXhrRequestAsJson($returnArr);
