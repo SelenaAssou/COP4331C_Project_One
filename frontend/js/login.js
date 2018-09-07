@@ -73,7 +73,7 @@ function getAllContacts()
   var url = urlBase + 'api/searchContacts.' + extension;
 
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", url, false);
+  xhr.open("POST", url, true);
   xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
   try
   {
@@ -119,7 +119,7 @@ function addRowOnTable(item, index)
 
 function doLogout() 
 {
-  userId = 0;
+  ownerId = 0;
   firstName = "";
   lastName = "";
 
@@ -131,6 +131,46 @@ function doLogout()
 
 function doRegister() 
 {
+  var rUsername = document.getElementById("registerUsername").value;
+  var rPassword = document.getElementById("registerPassword").value;
+  var rConfirmPassword = document.getElementById("confirmPassword").value;
+
+  if(rPassword != rConfirmPassword)
+  {
+    alert("Passwords don't match! Type them again.");
+    return;
+  }
+
+  var jsonPayload = '{"username":"' + rUsername + '", "password":"' + rPassword + '"}';
+  var url = urlBase + 'api/register.' + extension;
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", url, true);
+  xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+  try
+  {
+    xhr.send(jsonPayload);
+    var result = JSON.parse( xhr.responseText );
+
+    if(result == 1)
+    {
+        document.getElementById("registerGoodMessage").style.visibility = "visible";
+    }
+    else if(result == 0)
+    {
+        document.getElementById("registerUsedMessage").style.visibility = "visible";
+    }
+    else
+    {
+        document.getElementById("registerBadMessage").style.visibility = "visible";
+    }
+
+  }
+  catch(err)
+  {
+    alert(err.message)
+  }
 }
 
 function search()
@@ -144,7 +184,7 @@ function search()
   var url = urlBase + 'api/searchContacts.' + extension;
 
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", url, false);
+  xhr.open("POST", url, true);
   xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
   try
   {
