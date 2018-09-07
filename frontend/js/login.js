@@ -61,7 +61,7 @@ function doLogin()
   // {
   //  document.getElementById("loginResult").innerHTML = err.message;
   // }
-
+  addIDCookie();
   getAllContacts()
 
 }
@@ -127,6 +127,8 @@ function doLogout()
   document.getElementById("introsection").style.display = "block";
   document.getElementById("contactGroup").style.visibility = "hidden";
   document.getElementById("contactGroup").style.display = "none";
+
+  removeIDCookie();
 }
 
 function doRegister() 
@@ -210,4 +212,31 @@ function Delete(contactID)
   alert("contact id is " + contactID + "blah blah blah")
 
   // send contact id to be deleteds
+}
+
+function addIDCookie(){
+  //date isnt set so the cookie goes away once the browser is closed. (or until logout)
+    document.cookie = "id=" + ownerId + "; path=/";
+}
+
+function removeIDCookie(){
+  var date = new Date();
+  d.setTime(d.getTime() + (-100)); //to remove a cookie, set the time to expire to be in the past.
+    document.cookie = "id=; expires=" + d.toUTCString() + "; path=/";
+}
+
+function checkIDCookie(){
+  var cookie = document.cookie;
+  if (cookie.length > 0) {
+      ownerId = cookie.substring(3);
+
+      //show contacts panel
+      document.getElementById("introsection").style.visibility = "hidden";
+      document.getElementById("introsection").style.display = "none";
+      document.getElementById("contactGroup").style.visibility = "visible";
+      document.getElementById("contactGroup").style.display = "block";
+
+      //simulate doLogin function
+      getAllContacts();
+  }
 }
