@@ -36,7 +36,7 @@ if (is_null($xhrRequest)){
 
     //connection established, begin query and grab the data
     try {
-        $sqlQuery = "INSERT INTO `users` (user, pass) VALUES (?, ?);";
+        $sqlQuery = "INSERT INTO `users` (username, password) VALUES (?, ?);";
         $sqlStmt = $sqlConnection->prepare($sqlQuery);
         $sqlStmt->bind_param('ss', $requestUsername, $hashedPassword);
         $success = $sqlStmt->execute();
