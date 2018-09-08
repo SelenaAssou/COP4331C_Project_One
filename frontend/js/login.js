@@ -7,7 +7,7 @@ var firstName = "";
 var lastName = "";
 var buttonID = 0;
 
-function doLogin() 
+function doLogin()
 {
   document.getElementById("introsection").style.visibility = "hidden";
   document.getElementById("introsection").style.display = "none";
@@ -95,7 +95,7 @@ function addRowOnTable(item, index)
     var table = document.getElementById("contactTable");
     if(contactType == "Friend")
     {
-      $(table).find('tbody').append( "<tr class='success'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button' id='button" + buttonID +"'>Delete!</button> </td></tr>"); 
+      $(table).find('tbody').append( "<tr class='success'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button' id='button" + buttonID +"'>Delete!</button> </td></tr>");
     }
     else if(contactType == "Foe"){
       $(table).find('tbody').append( "<tr class='danger'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button' id='button" + buttonID +"'>Delete!</button> </td></tr>");
@@ -117,7 +117,7 @@ function addRowOnTable(item, index)
     buttonID = buttonID + 1;
 }
 
-function doLogout() 
+function doLogout()
 {
   ownerId = 0;
   firstName = "";
@@ -131,7 +131,7 @@ function doLogout()
   removeIDCookie();
 }
 
-function doRegister() 
+function doRegister()
 {
   var rUsername = document.getElementById("registerUsername").value;
   var rPassword = document.getElementById("registerPassword").value;
@@ -221,8 +221,8 @@ function addIDCookie(){
 
 function removeIDCookie(){
   var date = new Date();
-  d.setTime(d.getTime() + (-100)); //to remove a cookie, set the time to expire to be in the past.
-    document.cookie = "id=; expires=" + d.toUTCString() + "; path=/";
+  date.setTime(date.getTime() + (-100)); //to remove a cookie, set the time to expire to be in the past.
+    document.cookie = "id=; expires=" + date.toUTCString() + "; path=/";
 }
 
 function checkIDCookie(){
