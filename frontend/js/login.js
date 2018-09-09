@@ -209,9 +209,36 @@ function addContact()
 
 function Delete(contactID)
 {
-  alert("contact id is " + contactID + "blah blah blah")
+  document.getElementById("resultMessage").style.visibility = "visible";
+  document.getElementById("resultMessage").style.display = "block";
 
-  // send contact id to be deleteds
+  var jsonPayload = '{"ownerID":"' + '2' + '", "id": ' + contactID + '}';
+  var url = urlBase + 'api/deleteContact.' + extension;
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", url, false);
+  xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+  try
+  {
+    xhr.send(jsonPayload);
+    var resp = JSON.parse( xhr.responseText );
+    if (resp.success !== 1) {
+        alert("Unable to successfully delete contact");
+    }
+    var table = document.getElementById("contactTable");
+    while (table.rows.length > 1 )
+    {
+        table.deleteRow(1);
+    }
+    getAllContacts();
+    
+  }
+  catch(err)
+  {
+    alert(err.message);
+  }
+
+
 }
 
 function addIDCookie(){
