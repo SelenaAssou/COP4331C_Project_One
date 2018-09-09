@@ -73,7 +73,7 @@ function getAllContacts()
   var url = urlBase + 'api/searchContacts.' + extension;
 
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", url, true);
+  xhr.open("POST", url, false);
   xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
   try
   {
@@ -147,7 +147,7 @@ function doRegister()
   var url = urlBase + 'api/register.' + extension;
 
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", url, true);
+  xhr.open("POST", url, false);
   xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
   try
@@ -186,7 +186,7 @@ function search()
   var url = urlBase + 'api/searchContacts.' + extension;
 
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", url, true);
+  xhr.open("POST", url, false);
   xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
   try
   {
