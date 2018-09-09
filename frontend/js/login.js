@@ -9,61 +9,69 @@ var buttonID = 0;
 
 function doLogin()
 {
-  document.getElementById("introsection").style.visibility = "hidden";
-  document.getElementById("introsection").style.display = "none";
-  document.getElementById("contactGroup").style.visibility = "visible";
-  document.getElementById("contactGroup").style.display = "block";
+
+    function hideorShow(elementID, doShowElement) {
+        var element = document.getElementById(elementID);
+        element.hidden = !doShowElement;
+    }
 
   ownerId = 0;
   firstName = "";
   lastName = "";
 
-  /*  var login = document.getElementById("username").value;
-    var password = document.getElementById("password").value;
+    var loginBox = document.getElementById("username");
+    var passwordBox = document.getElementById("password");
+    var login = loginBox.value;
+    var password = passwordBox.value;
 
-    document.getElementById("loginResult").innerHTML = "";
+    var loginResultID = "loginResult";
+    var loginResult = document.getElementById(loginResultID);
+    hideorShow(loginResultID, false);
 
-    var jsonPayload = '{"login" : "' + login + '", "password" : "' + password + '"}';
-    var url = urlBase + '/Login.' + extension;
+    var jsonPayload = '{"username" : "' + login + '", "password" : "' + password + '"}';
+    var url = urlBase + 'api/login.' + extension;
 
     var xhr = new XMLHttpRequest();
     xhr.open("POST", url, false);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+
     try
     {
       xhr.send(jsonPayload);
 
       var jsonObject = JSON.parse( xhr.responseText );
 
-      userId = jsonObject.id;
-
-      if( userId < 1 )
+      ownerId = jsonObject.id;
+      hideorShow(loginResultID, true);
+      if( ownerId < 1 )
       {
-        hideorShow("loginResult", True)
-        document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
-        return;
+          loginResult.innerHTML = "User/Password combination incorrect";
+          loginResult.className = "alert alert-danger";
+
+          return;
+      } else { //successful login
+        addIDCookie();
+        getAllContacts();
+
+        document.getElementById("introsection").style.visibility = "hidden";
+        document.getElementById("introsection").style.display = "none";
+        document.getElementById("contactGroup").style.visibility = "visible";
+        document.getElementById("contactGroup").style.display = "block";
+        loginResult.className = "alert alert-success";
+        loginResult.innerHTML = "Welcome!";
+
+        //clear the boxes
+        loginBox.value = "";
+        passwordBox.value = "";
       }
-
-
-      firstName = jsonObject.firstName;
-      lastName = jsonObject.lastName;
-
-      document.getElementById("userName").innerHTML = firstName + " " + lastName;
-
-      hideorShow("loginResult", True)
-      document.getElementById("loginResult").innerHTML = "Hello, " & document.getElementById("userName").value;
-
-      document.getElementById("loginName").value = "";
-      document.getElementById("loginPassword").value = "";*/
-
-  // }
-  // catch(err)
-  // {
-  //  document.getElementById("loginResult").innerHTML = err.message;
-  // }
-  addIDCookie();
-  getAllContacts()
-
+  }
+  catch(err)
+  {
+    loginResult.innerHTML = err.message;
+    hideorShow(loginResultID, true);
+    loginResult.className = "alert alert-danger";
+  }
 }
 
 function getAllContacts()
@@ -129,6 +137,14 @@ function doLogout()
   document.getElementById("contactGroup").style.display = "none";
 
   removeIDCookie();
+
+  //remove all existing rows for the next user
+  var contactTable = document.getElementById("listTableBody");
+  var rows = contactTable.getElementsByTagName("tr");
+  for (var i = 0; i !== rows.length;){
+     rows[i].parentNode.removeChild(rows[i]);
+  }
+  document.getElementById("loginResult").hidden = true;
 }
 
 function doRegister()
@@ -247,9 +263,7 @@ function addIDCookie(){
 }
 
 function removeIDCookie(){
-  var date = new Date();
-  date.setTime(date.getTime() + (-100)); //to remove a cookie, set the time to expire to be in the past.
-    document.cookie = "id=; expires=" + date.toUTCString() + "; path=/";
+    document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/";
 }
 
 function checkIDCookie(){
