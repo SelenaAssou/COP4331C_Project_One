@@ -19,6 +19,8 @@ function doLogin()
   firstName = "";
   lastName = "";
 
+  hideMessages();
+
     var loginBox = document.getElementById("username");
     var passwordBox = document.getElementById("password");
     var login = loginBox.value;
@@ -74,10 +76,19 @@ function doLogin()
   }
 }
 
+function hideMessages()
+{
+  document.getElementById("registerGoodMessage").style.display = "none";
+  document.getElementById("registerGoodMessage").style.visibility = "hidden";
+  document.getElementById("registerUsedMessage").style.display = "none";
+  document.getElementById("registerUsedMessage").style.visibility = "hidden";
+  document.getElementById("registerBadMessage").style.display = "none";
+  document.getElementById("registerBadMessage").style.visibility = "hidden";
+}
+
 function getAllContacts()
 {
-// send sql request for all contacts... however u do that...
-  var jsonPayload = '{"ownerID":"2"}';
+  var jsonPayload = '{"ownerID":"' + ownerId + '"}';
   var url = urlBase + 'api/searchContacts.' + extension;
 
   var xhr = new XMLHttpRequest();
@@ -88,7 +99,10 @@ function getAllContacts()
     xhr.send(jsonPayload);
     var JSONObjectsArr = JSON.parse( xhr.responseText );
 
-    JSONObjectsArr.forEach(addRowOnTable)
+    var table = document.getElementById("contactTable");
+    JSONObjectsArr.forEach(function (item, index) {
+    addRowOnTable(table, item, index)
+});
 
   }
   catch(err)
@@ -97,10 +111,11 @@ function getAllContacts()
   }
 }
 
-function addRowOnTable(item, index)
+function addRowOnTable(table, item, index)
 {
+  if(item != null)
+  {
     var contactType = item.contactType;
-    var table = document.getElementById("contactTable");
     if(contactType == "Friend")
     {
       $(table).find('tbody').append( "<tr class='success'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button' id='button" + buttonID +"'>Delete!</button> </td></tr>");
@@ -123,6 +138,7 @@ function addRowOnTable(item, index)
     btn.onclick = function(){Delete(item.id)};
 
     buttonID = buttonID + 1;
+  }
 }
 
 function doLogout()
@@ -149,6 +165,7 @@ function doLogout()
 
 function doRegister()
 {
+  hideMessages();
   var rUsername = document.getElementById("registerUsername").value;
   var rPassword = document.getElementById("registerPassword").value;
   var rConfirmPassword = document.getElementById("confirmPassword").value;
@@ -169,19 +186,22 @@ function doRegister()
   try
   {
     xhr.send(jsonPayload);
-    var result = JSON.parse( xhr.responseText );
+    var result = JSON.parse( xhr.responseText ).success;
 
     if(result == 1)
     {
         document.getElementById("registerGoodMessage").style.visibility = "visible";
+        document.getElementById("registerGoodMessage").style.display = "block";
     }
     else if(result == 0)
     {
         document.getElementById("registerUsedMessage").style.visibility = "visible";
+        document.getElementById("registerUsedMessage").style.display = "block";
     }
     else
     {
         document.getElementById("registerBadMessage").style.visibility = "visible";
+        document.getElementById("registerBadMessage").style.display = "block";
     }
 
   }
@@ -198,7 +218,10 @@ function search()
   document.getElementById("resultMessage").style.visibility = "visible";
   document.getElementById("resultMessage").style.display = "block";
 
-  var jsonPayload = '{"ownerID":"2"}';
+  var fName = document.getElementById("searchFirst").value;
+  var lName = document.getElementById("searchLast").value;
+
+  var jsonPayload = '{"ownerID":"' + ownerId + '","firstName":"' + fName + '","lastname":"' + lName + '"}';
   var url = urlBase + 'api/searchContacts.' + extension;
 
   var xhr = new XMLHttpRequest();
@@ -209,7 +232,11 @@ function search()
     xhr.send(jsonPayload);
     var JSONObjectsArr = JSON.parse( xhr.responseText );
 
-    JSONObjectsArr.forEach(addRowOnTable)
+
+    var table = document.getElementById("searchTable");
+    JSONObjectsArr.forEach(function (item, index) {
+    addRowOnTable(table, item, index)
+});
 
   }
   catch(err)
