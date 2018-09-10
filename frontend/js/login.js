@@ -245,10 +245,55 @@ function search()
   }
 }
 
+
 function addContact()
 {
-    alert("Contact Added!")
+  var fName  = document.getElementById("firstName").value;
+  var lName = document.getElementById("lastName").value;
+  var email = document.getElementById("email").value;
+  var pNum = document.getElementById("phoneNum").value;
+  var city = document.getElementById("city").value;
+  var state = document.getElementById("state").value;
+  var zipCode = document.getElementById("zip").value;
+
+                   
+  var jsonPayload = '{"id":"' + OwnerId + '", "firstName": "' + fName + '", "lastName":"' + lName + '", "email":"' + email + '","phoneNumber":"' + pNum + '", "city":"' + city + '", "state":"' + state + '", "zip":"' + zipCode + '", "OwnerID": '+ 2 +'}';                     
+  var url = urlBase + 'api/addContact.' + extension;
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", url, false);
+  xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+
+  try
+  {
+    xhr.send(jsonPayload);
+    var result = JSON.parse( xhr.responseText );
+
+    var table = document.getElementById("contactTable");
+    JSONObjectsArr.forEach(function (item, index) 
+    {
+      addRowOnTable(table, item, index)
+    });    
+
+    if(result == 1)
+    {
+
+        document.getElementById("addContactGoodMessage").style.visibility = "visible";
+    }
+    else
+    {
+      document.getElementById("addContactBadMessage").style.visibility = "visible";
+    }
+
+  }
+
+  catch(err)
+  {
+    alert(err.message)
+  }  
 }
+
 
 function Delete(contactID)
 {
