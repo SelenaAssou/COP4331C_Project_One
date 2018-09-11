@@ -246,18 +246,6 @@ function search()
 }
 
 
-function findCheckedOption()
-{
-  optradio1
-  var i;
-  for (i = 1; i <= 5; i++) {
-    if(document.getElementById("optradio" + i).checked == true)
-    {
-      return document.getElementById("optradio" + i).value;
-    }
-  }
-}
-
 function addContact()
 {
   var fName  = document.getElementById("firstName").value;
@@ -267,11 +255,9 @@ function addContact()
   var city = document.getElementById("city").value;
   var state = document.getElementById("state").value;
   var zipCode = document.getElementById("zip").value;
-  var contactType = findCheckedOption();
 
                    
-  var jsonPayload = '{"firstName": "' + fName + '", "lastName":"' + lName + '", "email":"' + email + '","phoneNumber":"' + pNum + '", "contactType":"' + contactType +'", "city":"' + city + '", "state":"' + state + '", "zip":"' + zipCode + '", "OwnerID": '+ ownerId +'}';                     
-  alert(jsonPayload);
+  var jsonPayload = '{"id":"' + OwnerId + '", "firstName": "' + fName + '", "lastName":"' + lName + '", "email":"' + email + '","phoneNumber":"' + pNum + '", "city":"' + city + '", "state":"' + state + '", "zip":"' + zipCode + '", "OwnerID": '+ 2 +'}';                     
   var url = urlBase + 'api/addContact.' + extension;
 
   var xhr = new XMLHttpRequest();
@@ -293,13 +279,11 @@ function addContact()
     if(result.success == 1)
     {
 
-        document.getElementById("addGoodMessage").style.visibility = "visible";
-        document.getElementById("addGoodMessage").style.display = "block";
+        document.getElementById("addContactGoodMessage").style.visibility = "visible";
     }
     else
     {
-      document.getElementById("addBadMessage").style.visibility = "visible";
-      document.getElementById("addBadMessage").style.display = "block";
+      document.getElementById("addContactBadMessage").style.visibility = "visible";
     }
 
   }
@@ -308,7 +292,6 @@ function addContact()
   {
     alert(err.message)
   }  
-
 }
 
 
