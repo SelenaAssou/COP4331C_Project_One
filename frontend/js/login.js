@@ -92,23 +92,30 @@ function getAllContacts()
   var url = urlBase + 'api/searchContacts.' + extension;
 
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", url, false);
+  xhr.open("POST", url, true);
   xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-  try
+  xhr.onreadystatechange = function (e) 
   {
-    xhr.send(jsonPayload);
-    var JSONObjectsArr = JSON.parse( xhr.responseText );
+    try
+    {
+      if (this.readyState == 4)
+      {
 
-    var table = document.getElementById("contactTable");
-    JSONObjectsArr.forEach(function (item, index) {
-    addRowOnTable(table, item, index)
-});
+        var JSONObjectsArr = JSON.parse( this.responseText );
 
+        var table = document.getElementById("contactTable");
+        JSONObjectsArr.forEach(function (item, index) {
+        addRowOnTable(table, item, index)
+        });
+      }
+
+    }
+    catch(err)
+    {
+      alert(err.message)
+    }
   }
-  catch(err)
-  {
-    alert(err.message)
-  }
+  xhr.send(jsonPayload);
 }
 
 function addRowOnTable(table, item, index)
@@ -180,35 +187,41 @@ function doRegister()
   var url = urlBase + 'api/register.' + extension;
 
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", url, false);
+  xhr.open("POST", url, true);
   xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
-  try
+  xhr.onreadystatechange = function (e) 
   {
-    xhr.send(jsonPayload);
-    var result = JSON.parse( xhr.responseText ).success;
+    try
+    {
+      if (this.readyState == 4)
+      {
+        var result = JSON.parse( this.responseText ).success;
 
-    if(result == 1)
-    {
-        document.getElementById("registerGoodMessage").style.visibility = "visible";
-        document.getElementById("registerGoodMessage").style.display = "block";
-    }
-    else if(result == 0)
-    {
-        document.getElementById("registerUsedMessage").style.visibility = "visible";
-        document.getElementById("registerUsedMessage").style.display = "block";
-    }
-    else
-    {
-        document.getElementById("registerBadMessage").style.visibility = "visible";
-        document.getElementById("registerBadMessage").style.display = "block";
-    }
+        if(result == 1)
+        {
+            document.getElementById("registerGoodMessage").style.visibility = "visible";
+            document.getElementById("registerGoodMessage").style.display = "block";
+        }
+        else if(result == 0)
+        {
+            document.getElementById("registerUsedMessage").style.visibility = "visible";
+            document.getElementById("registerUsedMessage").style.display = "block";
+        }
+        else
+        {
+            document.getElementById("registerBadMessage").style.visibility = "visible";
+            document.getElementById("registerBadMessage").style.display = "block";
+        }
 
+      }
+    }
+      catch(err)
+      {
+        alert(err.message)
+      }
   }
-  catch(err)
-  {
-    alert(err.message)
-  }
+  xhr.send(jsonPayload);
 }
 
 function search()
@@ -225,28 +238,33 @@ function search()
   var url = urlBase + 'api/searchContacts.' + extension;
 
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", url, false);
+  xhr.open("POST", url, true);
   xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-  try
+  xhr.onreadystatechange = function (e) 
   {
-    xhr.send(jsonPayload);
-    var JSONObjectsArr = JSON.parse( xhr.responseText );
-
-
-    var table = document.getElementById("searchTable");
-    while (table.rows.length > 1 )
+    try
     {
-        table.deleteRow(1);
-    }
-    JSONObjectsArr.forEach(function (item, index) {
-    addRowOnTable(table, item, index)
-});
+      if (this.readyState == 4)
+      {
+        var JSONObjectsArr = JSON.parse( this.responseText );
 
+
+        var table = document.getElementById("searchTable");
+        while (table.rows.length > 1 )
+        {
+            table.deleteRow(1);
+        }
+        JSONObjectsArr.forEach(function (item, index) {
+        addRowOnTable(table, item, index)
+        });
+      }
+    }
+    catch(err)
+    {
+      alert(err.message)
+    }
   }
-  catch(err)
-  {
-    alert(err.message)
-  }
+  xhr.send(jsonPayload);
 }
 
 
@@ -275,44 +293,47 @@ function addContact()
 
                    
   var jsonPayload = '{"firstName": "' + fName + '", "lastName":"' + lName + '", "email":"' + email + '","phoneNumber":"' + pNum + '", "contactType":"' + "friend" + '", "city":"' + city + '", "state":"' + state + '", "zip":"' + zipCode + '" , "ownerID": '+ ownerId +'}';
-  alert(jsonPayload);
   var url = urlBase + 'api/addContact.' + extension;
 
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", url, false);
+  xhr.open("POST", url, true);
   xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
-
-  try
+  xhr.onreadystatechange = function (e) 
   {
-    xhr.send(jsonPayload);
-    var result = JSON.parse( xhr.responseText );
-
-    if(result.success == 1)
+    try
     {
+      if (this.readyState == 4)
+      {
+        var result = JSON.parse( this.responseText );
 
-        document.getElementById("addGoodMessage").style.visibility = "visible";
-        document.getElementById("addGoodMessage").style.display = "block";
-        var table = document.getElementById("contactTable");
-        while (table.rows.length > 1 )
+        if(result.success == 1)
         {
-            table.deleteRow(1);
+            document.getElementById("addGoodMessage").style.visibility = "visible";
+            document.getElementById("addGoodMessage").style.display = "block";
+            var table = document.getElementById("contactTable");
+            while (table.rows.length > 1 )
+            {
+                table.deleteRow(1);
+            }
+            getAllContacts();
         }
-        getAllContacts();
-    }
-    else
-    {
-      document.getElementById("addBadMessage").style.visibility = "visible";
-      document.getElementById("addBadMessage").style.display = "block";
+        else
+        {
+          document.getElementById("addBadMessage").style.visibility = "visible";
+          document.getElementById("addBadMessage").style.display = "block";
+        }
+      }
+
     }
 
+    catch(err)
+    {
+      alert(err.message)
+    }  
   }
 
-  catch(err)
-  {
-    alert(err.message)
-  }  
-
+  xhr.send(jsonPayload);
 }
 
 
@@ -325,30 +346,35 @@ function Delete(contactID)
   var url = urlBase + 'api/deleteContact.' + extension;
 
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", url, false);
+  xhr.open("POST", url, true);
   xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-  try
+
+  xhr.onreadystatechange = function (e) 
   {
-    xhr.send(jsonPayload);
-    var resp = JSON.parse( xhr.responseText );
-    if (resp.success !== 1) {
-        alert("Unable to successfully delete contact");
-    }
-    var table = document.getElementById("contactTable");
-    while (table.rows.length > 1 )
+    try
     {
-        table.deleteRow(1);
+      if (this.readyState == 4)
+      {
+        var resp = JSON.parse( this.responseText );
+        if (resp.success !== 1) {
+          alert("Unable to successfully delete contact");
+        }
+        var table = document.getElementById("contactTable");
+        while (table.rows.length > 1 )
+        {
+            table.deleteRow(1);
+        }
+        getAllContacts();
+    
+      }
     }
-    getAllContacts();
-    
-    
-  }
-  catch(err)
-  {
-    alert(err.message);
+    catch(err)
+    {
+      alert(err.message);
+    }
   }
 
-
+  xhr.send(jsonPayload);
 }
 
 function addIDCookie(){
