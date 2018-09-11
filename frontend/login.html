@@ -259,6 +259,20 @@
 				</div>
 			</div>
 		</div>
+
+		<canvas class="background"></canvas>
+		<script src="js/particles.min.js"></script>
+		<script>
+			window.onload = function () {
+				Particles.init({
+					selector: '.background',
+					color: '#ffffff',
+					connectParticles: true,
+					minDistance: 150
+				});
+			};
+		</script>
+
 </body>
 
 </html>
