@@ -51,7 +51,7 @@
 	<strong>Error!</strong> Something went wrong with adding the contact! Please try again later.
 </div>
 
-<body onload="checkIDCookie()">
+<body>
 	<div class="container-fluid">
 		<div id="introsection" style="display:block; visibility:visible;">
 			<div class="row">
@@ -264,7 +264,8 @@
 		<script src="js/particles.min.js"></script>
 		<script>
 			window.onload = function () {
-				Particles.init({
+                checkIDCookie();
+                Particles.init({
 					selector: '.background',
 					color: '#ffffff',
 					connectParticles: true,
