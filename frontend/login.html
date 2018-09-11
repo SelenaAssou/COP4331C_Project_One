@@ -41,6 +41,16 @@
   <strong>Error!</strong> Something went wrong! Please try again later.
 </div>
 
+<div class="alert alert-success alert-dismissible" id="addGoodMessage" style="display:none; visibility:hidden;">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+ <strong>Success!</strong> Contact has been added!
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="addBadMessage" style="display:none; visibility:hidden;">
+  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  <strong>Error!</strong> Something went wrong with adding the contact! Please try again later.
+</div>
+
 <body onload="checkIDCookie()">
 	<div class="container-fluid">
 	<div id="introsection" style="display:block; visibility:visible;">
@@ -168,17 +178,21 @@
 											<input type="text" id="zip" tabindex="7" class="form-control" placeholder="Zipcode">
 										</div>
 										<div class="form-group">
-											<div class="dropdown">
-											    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Contact Type
- 											    <span class="caret"></span></button>
-											    <ul class="dropdown-menu dropdown-menu-center">
-											      <li><a href="#">Friend</a></li>
-											      <li><a href="#">Foe</a></li>
-											      <li><a href="#">Coworker</a></li>
-											      <li><a href="#">Family</a></li>
-											      <li><a href="#">Acquaintance</a></li>
-											    </ul>
+											 <div class="radio">
+											  <label><input type="radio" name="optradio" checked>Friend</label>
 											</div>
+											<div class="radio">
+											  <label><input type="radio" name="optradio">Foe</label>
+											</div>
+											<div class="radio">
+											  <label><input type="radio" name="optradio">Coworker</label>
+											</div> 
+											<div class="radio">
+											  <label><input type="radio" name="optradio">Family</label>
+											</div> 
+											<div class="radio">
+											  <label><input type="radio" name="optradio">Acquaintance</label>
+											</div> 
 										</div>
 										<div class="form-group">
 											<div class="row">

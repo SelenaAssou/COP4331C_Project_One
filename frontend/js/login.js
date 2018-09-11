@@ -246,6 +246,18 @@ function search()
 }
 
 
+function findCheckedOption()
+{
+  optradio1
+  var i;
+  for (i = 1; i <= 5; i++) {
+    if(document.getElementById("optradio" + i).checked == true)
+    {
+      return document.getElementById("optradio" + i).value;
+    }
+  }
+}
+
 function addContact()
 {
   var fName  = document.getElementById("firstName").value;
@@ -255,9 +267,11 @@ function addContact()
   var city = document.getElementById("city").value;
   var state = document.getElementById("state").value;
   var zipCode = document.getElementById("zip").value;
+//  var contactType = findCheckedOption();
 
                    
-  var jsonPayload = '{"id":"' + OwnerId + '", "firstName": "' + fName + '", "lastName":"' + lName + '", "email":"' + email + '","phoneNumber":"' + pNum + '", "city":"' + city + '", "state":"' + state + '", "zip":"' + zipCode + '", "OwnerID": '+ 2 +'}';                     
+  var jsonPayload = '{"firstName": "' + fName + '", "lastName":"' + lName + '", "email":"' + email + '","phoneNumber":"' + pNum + '", "contactType":"' + "friend" + '", "city":"' + city + '", "state":"' + state + '", "zip":"' + zipCode + '" , "ownerID": '+ ownerId +'}';
+  alert(jsonPayload);
   var url = urlBase + 'api/addContact.' + extension;
 
   var xhr = new XMLHttpRequest();
@@ -270,20 +284,22 @@ function addContact()
     xhr.send(jsonPayload);
     var result = JSON.parse( xhr.responseText );
 
-    var table = document.getElementById("contactTable");
-    JSONObjectsArr.forEach(function (item, index) 
-    {
-      addRowOnTable(table, item, index)
-    });    
-
     if(result.success == 1)
     {
 
-        document.getElementById("addContactGoodMessage").style.visibility = "visible";
+        document.getElementById("addGoodMessage").style.visibility = "visible";
+        document.getElementById("addGoodMessage").style.display = "block";
+        var table = document.getElementById("contactTable");
+        while (table.rows.length > 1 )
+        {
+            table.deleteRow(1);
+        }
+        getAllContacts();
     }
     else
     {
-      document.getElementById("addContactBadMessage").style.visibility = "visible";
+      document.getElementById("addBadMessage").style.visibility = "visible";
+      document.getElementById("addBadMessage").style.display = "block";
     }
 
   }
@@ -292,6 +308,7 @@ function addContact()
   {
     alert(err.message)
   }  
+
 }
 
 
@@ -300,7 +317,7 @@ function Delete(contactID)
   document.getElementById("resultMessage").style.visibility = "visible";
   document.getElementById("resultMessage").style.display = "block";
 
-  var jsonPayload = '{"ownerID":"' + '2' + '", "id": ' + contactID + '}';
+  var jsonPayload = '{"ownerID":"' + ownerId + '", "id": ' + contactID + '}';
   var url = urlBase + 'api/deleteContact.' + extension;
 
   var xhr = new XMLHttpRequest();
