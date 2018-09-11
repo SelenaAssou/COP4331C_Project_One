@@ -234,6 +234,10 @@ function search()
 
 
     var table = document.getElementById("searchTable");
+    while (table.rows.length > 1 )
+    {
+        table.deleteRow(1);
+    }
     JSONObjectsArr.forEach(function (item, index) {
     addRowOnTable(table, item, index)
 });
@@ -336,6 +340,7 @@ function Delete(contactID)
         table.deleteRow(1);
     }
     getAllContacts();
+    
     
   }
   catch(err)
