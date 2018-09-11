@@ -276,7 +276,7 @@ function addContact()
       addRowOnTable(table, item, index)
     });    
 
-    if(result == 1)
+    if(result.success == 1)
     {
 
         document.getElementById("addContactGoodMessage").style.visibility = "visible";
