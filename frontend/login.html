@@ -5,14 +5,13 @@
 	<meta charset="utf-8">
 
 	<!-- browser info -->
-	<title>Contact Book</title>
+	<title>Connection - Contact Book</title>
 	<link rel="icon" href="img/icon.svg">
 
 	<!-- css -->
 	<link href="css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<link href="css/login.css" rel="stylesheet" id="design-css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
-
 
 	<!-- js -->
 	<script src="js/jquery.min.js"></script>
@@ -21,35 +20,11 @@
 </head>
 
 <div class="jumbotron">
-	<h1 style="text-align: center">Contact Book</h1>
-	<!-- <p style="text-align: center"> Keep track of everyone you know! Not creepy at all!</p> -->
+	<h1 style="text-align: center">CONNECTION</h1>
+	<p style="text-align: center"> Contact Book </p>
 </div>
 
-<div class="alert alert-success" hidden="true" id="loginResult">
-	<strong>Success!</strong> Welcome!
-</div>
-
-<div class="alert alert-success" hidden="true" id="registerGoodMessage">
-	<strong>Success!</strong> User has been successfully registered!
-</div>
-
-<div class="alert alert-info" hidden="true" id="registerUsedMessage">
-	<strong>Info!</strong> User has already been registered!
-</div>
-
-<div class="alert alert-danger" hidden="true" id="registerBadMessage">
-	<strong>Error!</strong> Something went wrong! Please try again later.
-</div>
-
-<div class="alert alert-success alert-dismissible" id="addGoodMessage" style="display:none; visibility:hidden;">
-	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-	<strong>Success!</strong> Contact has been added!
-</div>
-
-<div class="alert alert-danger alert-dismissible" id="addBadMessage" style="display:none; visibility:hidden;">
-	<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-	<strong>Error!</strong> Something went wrong with adding the contact! Please try again later.
-</div>
+<div id="addMessage"></div>
 
 <body>
 	<div class="container-fluid">
@@ -174,19 +149,19 @@
 											</div>
 											<div class="form-group">
 												<div class="radio">
-													<label><input type="radio" name="optradio" checked>Friend</label>
+													<label><input type="radio" id="optradio1" name="optradio" value="Friend" checked>Friend</label>
 												</div>
 												<div class="radio">
-													<label><input type="radio" name="optradio">Foe</label>
+													<label><input type="radio" id="optradio2" name="optradio" value="Foe" >Foe</label>
 												</div>
 												<div class="radio">
-													<label><input type="radio" name="optradio">Coworker</label>
+													<label><input type="radio" id="optradio3" name="optradio" value="Coworker" >Coworker</label>
 												</div>
 												<div class="radio">
-													<label><input type="radio" name="optradio">Family</label>
+													<label><input type="radio" id="optradio4" name="optradio" value="Family" >Family</label>
 												</div>
 												<div class="radio">
-													<label><input type="radio" name="optradio">Acquaintance</label>
+													<label><input type="radio" id="optradio5" name="optradio" value="Acquaintance" >Acquaintance</label>
 												</div>
 											</div>
 											<div class="form-group">

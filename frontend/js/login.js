@@ -10,25 +10,12 @@ var buttonID = 0;
 function doLogin()
 {
 
-    function hideorShow(elementID, doShowElement) {
-        var element = document.getElementById(elementID);
-        element.hidden = !doShowElement;
-    }
-
   ownerId = 0;
-  firstName = "";
-  lastName = "";
-
-  hideMessages();
 
     var loginBox = document.getElementById("username");
     var passwordBox = document.getElementById("password");
     var login = loginBox.value;
     var password = passwordBox.value;
-
-    var loginResultID = "loginResult";
-    var loginResult = document.getElementById(loginResultID);
-    hideorShow(loginResultID, false);
 
     var jsonPayload = '{"username" : "' + login + '", "password" : "' + password + '"}';
     var url = urlBase + 'api/login.' + extension;
@@ -37,7 +24,6 @@ function doLogin()
     xhr.open("POST", url, false);
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
-
     try
     {
       xhr.send(jsonPayload);
@@ -45,13 +31,10 @@ function doLogin()
       var jsonObject = JSON.parse( xhr.responseText );
 
       ownerId = jsonObject.id;
-      hideorShow(loginResultID, true);
       if( ownerId < 1 )
       {
-          loginResult.innerHTML = "User/Password combination incorrect";
-          loginResult.className = "alert alert-danger";
-
-          return;
+        $(document.getElementById("addMessage")).append('<div class="alert alert-danger alert-dismissible" id="badlogin">  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>  <strong>Something went wrong!</strong> Make sure you typed your username and password correctly!</div>');
+        return;
       } else { //successful login
         addIDCookie();
         getAllContacts();
@@ -60,8 +43,7 @@ function doLogin()
         document.getElementById("introsection").style.display = "none";
         document.getElementById("contactGroup").style.visibility = "visible";
         document.getElementById("contactGroup").style.display = "block";
-        loginResult.className = "alert alert-success";
-        loginResult.innerHTML = "Welcome!";
+        $(document.getElementById("addMessage")).append('<div class="alert alert-success alert-dismissible" id="goodLogin">  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>  <strong>Success!</strong> Welcome, ' + login + '! </div>');
 
         //clear the boxes
         loginBox.value = "";
@@ -70,20 +52,8 @@ function doLogin()
   }
   catch(err)
   {
-    loginResult.innerHTML = err.message;
-    hideorShow(loginResultID, true);
-    loginResult.className = "alert alert-danger";
+    $(document.getElementById("addMessage")).append('<div class="alert alert-danger alert-dismissible" id="superbadLogin">  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>  <strong>Error!</strong> Something went wrong! Please try again later. </div>');
   }
-}
-
-function hideMessages()
-{
-  document.getElementById("registerGoodMessage").style.display = "none";
-  document.getElementById("registerGoodMessage").style.visibility = "hidden";
-  document.getElementById("registerUsedMessage").style.display = "none";
-  document.getElementById("registerUsedMessage").style.visibility = "hidden";
-  document.getElementById("registerBadMessage").style.display = "none";
-  document.getElementById("registerBadMessage").style.visibility = "hidden";
 }
 
 function getAllContacts()
@@ -94,7 +64,7 @@ function getAllContacts()
   var xhr = new XMLHttpRequest();
   xhr.open("POST", url, true);
   xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-  xhr.onreadystatechange = function (e) 
+  xhr.onreadystatechange = function (e)
   {
     try
     {
@@ -151,8 +121,6 @@ function addRowOnTable(table, item, index)
 function doLogout()
 {
   ownerId = 0;
-  firstName = "";
-  lastName = "";
 
   document.getElementById("introsection").style.visibility = "visible";
   document.getElementById("introsection").style.display = "block";
@@ -165,21 +133,19 @@ function doLogout()
   var contactTable = document.getElementById("listTableBody");
   var rows = contactTable.getElementsByTagName("tr");
   for (var i = 0; i !== rows.length;){
-     rows[i].parentNode.removeChild(rows[i]);
+    rows[i].parentNode.removeChild(rows[i]);
   }
-  document.getElementById("loginResult").hidden = true;
 }
 
 function doRegister()
 {
-  hideMessages();
   var rUsername = document.getElementById("registerUsername").value;
   var rPassword = document.getElementById("registerPassword").value;
   var rConfirmPassword = document.getElementById("confirmPassword").value;
 
   if(rPassword != rConfirmPassword)
   {
-    alert("Passwords don't match! Type them again.");
+    $(document.getElementById("addMessage")).append('<div class="alert alert-info alert-dismissible" id="passwordIssue">  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>  <strong>Passwords do not match!</strong> Did not register user. </div>');
     return;
   }
 
@@ -190,7 +156,7 @@ function doRegister()
   xhr.open("POST", url, true);
   xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
-  xhr.onreadystatechange = function (e) 
+  xhr.onreadystatechange = function (e)
   {
     try
     {
@@ -200,18 +166,15 @@ function doRegister()
 
         if(result == 1)
         {
-            document.getElementById("registerGoodMessage").style.visibility = "visible";
-            document.getElementById("registerGoodMessage").style.display = "block";
+          $(document.getElementById("addMessage")).append('<div class="alert alert-success alert-dismissible" id="goodRegister">  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>  <strong>Success!</strong> User has been successfully registered!</div>');
         }
         else if(result == 0)
         {
-            document.getElementById("registerUsedMessage").style.visibility = "visible";
-            document.getElementById("registerUsedMessage").style.display = "block";
+          $(document.getElementById("addMessage")).append('<div class="alert alert-info alert-dismissible" id="usedRegister">  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>  <strong>Sorry!</strong> This username has already been taken!</div>');
         }
         else
         {
-            document.getElementById("registerBadMessage").style.visibility = "visible";
-            document.getElementById("registerBadMessage").style.display = "block";
+          $(document.getElementById("addMessage")).append('<div class="alert alert-danger alert-dismissible" id="badRegister">  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>  <strong>Error!</strong> Something went wrong! Please try again later. </div>');
         }
 
       }
@@ -240,7 +203,7 @@ function search()
   var xhr = new XMLHttpRequest();
   xhr.open("POST", url, true);
   xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-  xhr.onreadystatechange = function (e) 
+  xhr.onreadystatechange = function (e)
   {
     try
     {
@@ -270,10 +233,9 @@ function search()
 
 function findCheckedOption()
 {
-  optradio1
   var i;
   for (i = 1; i <= 5; i++) {
-    if(document.getElementById("optradio" + i).checked == true)
+    if(document.getElementById("optradio" + i).checked)
     {
       return document.getElementById("optradio" + i).value;
     }
@@ -289,17 +251,16 @@ function addContact()
   var city = document.getElementById("city").value;
   var state = document.getElementById("state").value;
   var zipCode = document.getElementById("zip").value;
-//  var contactType = findCheckedOption();
+  var contactType = findCheckedOption();
 
-                   
-  var jsonPayload = '{"firstName": "' + fName + '", "lastName":"' + lName + '", "email":"' + email + '","phoneNumber":"' + pNum + '", "contactType":"' + "friend" + '", "city":"' + city + '", "state":"' + state + '", "zip":"' + zipCode + '" , "ownerID": '+ ownerId +'}';
+  var jsonPayload = '{"firstName": "' + fName + '", "lastName":"' + lName + '", "email":"' + email + '","phoneNumber":"' + pNum + '", "contactType":"' + contactType + '", "city":"' + city + '", "state":"' + state + '", "zip":"' + zipCode + '" , "ownerID": '+ ownerId +'}';
   var url = urlBase + 'api/addContact.' + extension;
 
   var xhr = new XMLHttpRequest();
   xhr.open("POST", url, true);
   xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
-  xhr.onreadystatechange = function (e) 
+  xhr.onreadystatechange = function (e)
   {
     try
     {
@@ -309,9 +270,10 @@ function addContact()
 
         if(result.success == 1)
         {
-            document.getElementById("addGoodMessage").style.visibility = "visible";
-            document.getElementById("addGoodMessage").style.display = "block";
-            var table = document.getElementById("contactTable");
+
+          $(document.getElementById("addMessage")).append('<div class="alert alert-success alert-dismissible" id="addGoodMessage">  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>  <strong>Success!</strong> Contact has been added!</div>');
+
+          var table = document.getElementById("contactTable");
             while (table.rows.length > 1 )
             {
                 table.deleteRow(1);
@@ -320,8 +282,7 @@ function addContact()
         }
         else
         {
-          document.getElementById("addBadMessage").style.visibility = "visible";
-          document.getElementById("addBadMessage").style.display = "block";
+          $(document.getElementById("addMessage")).append('<div class="alert alert-danger alert-dismissible" id="addBadMessage">  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>  <strong>Error!</strong> Something went wrong with adding the contact! Please try again later.</div>');
         }
       }
 
@@ -330,15 +291,14 @@ function addContact()
     catch(err)
     {
       alert(err.message)
-    }  
+    }
   }
 
   xhr.send(jsonPayload);
 }
 
 
-function Delete(contactID)
-{
+function Delete(contactID) {
   document.getElementById("resultMessage").style.visibility = "visible";
   document.getElementById("resultMessage").style.display = "block";
 
@@ -349,27 +309,22 @@ function Delete(contactID)
   xhr.open("POST", url, true);
   xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 
-  xhr.onreadystatechange = function (e) 
-  {
-    try
-    {
-      if (this.readyState == 4)
-      {
-        var resp = JSON.parse( this.responseText );
+  xhr.onreadystatechange = function (e) {
+    try {
+      if (this.readyState == 4) {
+        var resp = JSON.parse(this.responseText);
         if (resp.success !== 1) {
           alert("Unable to successfully delete contact");
         }
         var table = document.getElementById("contactTable");
-        while (table.rows.length > 1 )
-        {
-            table.deleteRow(1);
+        while (table.rows.length > 1) {
+          table.deleteRow(1);
         }
         getAllContacts();
-    
+
       }
     }
-    catch(err)
-    {
+    catch (err) {
       alert(err.message);
     }
   }
