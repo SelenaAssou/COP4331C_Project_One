@@ -206,7 +206,7 @@ function search()
   var fName = document.getElementById("searchFirst").value;
   var lName = document.getElementById("searchLast").value;
 
-  var jsonPayload = '{"ownerID":"' + ownerId + '","firstName":"' + fName + '","lastname":"' + lName + '"}';
+  var jsonPayload = '{"ownerID":"' + ownerId + '","firstName":"' + fName + '","lastName":"' + lName + '"}';
   var url = urlBase + 'api/searchContacts.' + extension;
 
   var xhr = new XMLHttpRequest();
