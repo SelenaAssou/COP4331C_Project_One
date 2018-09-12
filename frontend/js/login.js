@@ -14,8 +14,12 @@ function doLogin()
 
     var loginBox = document.getElementById("username");
     var passwordBox = document.getElementById("password");
-    var login = loginBox.value;
+    var login = encodeURI(loginBox.value);
     var password = passwordBox.value;
+    if (login == '' || password == '') {
+        alert("Username and Password cannot be blank");
+        return;
+    }
 
     var jsonPayload = '{"username" : "' + login + '", "password" : "' + password + '"}';
     var url = urlBase + 'api/login.' + extension;
@@ -139,9 +143,14 @@ function doLogout()
 
 function doRegister()
 {
-  var rUsername = document.getElementById("registerUsername").value;
+  var rUsername = encodeURI(document.getElementById("registerUsername").value);
   var rPassword = document.getElementById("registerPassword").value;
   var rConfirmPassword = document.getElementById("confirmPassword").value;
+
+    if (rUsername == '' || rPassword == '') {
+        alert("Username and Password cannot be blank");
+        return;
+    }
 
   if(rPassword != rConfirmPassword)
   {
@@ -244,16 +253,30 @@ function findCheckedOption()
 
 function addContact()
 {
-  var fName  = document.getElementById("firstName").value;
-  var lName = document.getElementById("lastName").value;
-  var email = document.getElementById("email").value;
-  var pNum = document.getElementById("phoneNum").value;
-  var city = document.getElementById("city").value;
-  var state = document.getElementById("state").value;
-  var zipCode = document.getElementById("zip").value;
+  var fName  = encodeURI(document.getElementById("firstName").value);
+  var lName = encodeURI(document.getElementById("lastName").value);
+  var email = (document.getElementById("email").value);
+  var pNum = encodeURI(document.getElementById("phoneNum").value);
+  var city = encodeURI(document.getElementById("city").value);
+  var state = encodeURI(document.getElementById("state").value);
+  var zipCode = encodeURI(document.getElementById("zip").value);
   var contactType = findCheckedOption();
 
-  var jsonPayload = '{"firstName": "' + fName + '", "lastName":"' + lName + '", "email":"' + email + '","phoneNumber":"' + pNum + '", "contactType":"' + contactType + '", "city":"' + city + '", "state":"' + state + '", "zip":"' + zipCode + '" , "ownerID": '+ ownerId +'}';
+  // regex patterns
+  var emailPatt = new RegExp('[a-zA-Z0-9\\.\\+\\_\\-]+\\@[a-zA-Z0-9.]+\\.[a-zA-Z0-9]+');
+  var zipPatt = new RegExp("^\\d{5}$");
+
+  if (!zipPatt.test(zipCode)) {
+    alert("Bad zipcode");
+    return;
+  }
+
+  if (!emailPatt.test(email)) {
+    alert("Bad email");
+    return;
+  }
+                   
+  var jsonPayload = '{"firstName": "' + fName + '", "lastName":"' + lName + '", "email":"' + email + '","phoneNumber":"' + pNum + '", "contactType":"' + "friend" + '", "city":"' + city + '", "state":"' + state + '", "zip":"' + zipCode + '" , "ownerID": '+ ownerId +'}';
   var url = urlBase + 'api/addContact.' + extension;
 
   var xhr = new XMLHttpRequest();
