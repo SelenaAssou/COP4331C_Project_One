@@ -263,8 +263,8 @@ function addContact()
   var contactType = findCheckedOption();
 
   // regex patterns
-  var emailPatt = new RegExp('[a-zA-Z0-9\\.\\+\\_\\-]+\\@[a-zA-Z0-9.]+\\.[a-zA-Z0-9]+');
-  var zipPatt = new RegExp("^\\d{5}$");
+  var emailPatt = new RegExp('([a-zA-Z0-9\\.\\+\\_\\-]+\\@[a-zA-Z0-9.]+\\.[a-zA-Z0-9]+|^$)');
+  var zipPatt = new RegExp("(^\\d{5}$|^$)");
 
   if (!zipPatt.test(zipCode)) {
     alert("Bad zipcode");
