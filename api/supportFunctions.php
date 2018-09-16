@@ -28,4 +28,21 @@ function returnXhrRequestAsJson($obj){
     header('Content-type: application/json');
     echo $jsonObj;
 }
+
+/**
+ * Checks to make sure that not of the variables passed in are Boolean types. <br/>
+ * This is useful for checking if a variable failed a sanitation filter from functions such as filter_var. </br>
+ * Index of the failed argument is passed to the server error log.
+ * @param mixed ...$types one or more variables of any type to be checked.
+ * @return bool - true if one of the types passed in was a boolean. false otherwise.
+ */
+function didFailFilter(...$types){
+    foreach ($types as $index=>$type){
+        if (is_bool($type)) {
+            error_log("failed filter. index of failure: " . $index);
+            return true;
+        }
+    }
+    return false;
+}
 ?>
