@@ -97,25 +97,28 @@ function addRowOnTable(table, item, index)
   if(item != null)
   {
     var contactType = item.contactType;
+    var tableRowHeader = "";
     if(contactType == "Friend")
     {
-      $(table).find('tbody').append( "<tr class='success'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button' id='button" + buttonID +"'>Delete!</button> </td></tr>");
+      tableRowHeader = "<tr class='success'><td>";
     }
     else if(contactType == "Foe"){
-      $(table).find('tbody').append( "<tr class='danger'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button' id='button" + buttonID +"'>Delete!</button> </td></tr>");
+        tableRowHeader = "<tr class='danger'><td>";
     }
     else if(contactType == "Coworker"){
-      $(table).find('tbody').append( "<tr class='info'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button' id='button" + buttonID +"'>Delete!</button> </td></tr>");
+        tableRowHeader = "<tr class='info'><td>";
     }
     else if(contactType == "Family"){
-      $(table).find('tbody').append( "<tr class='warning'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button' id='button" + buttonID +"'>Delete!</button> </td></tr>" );
+        tableRowHeader = "<tr class='warning'><td>";
     }
     else
     {
-      $(table).find('tbody').append( "<tr class='active'><td>" + item.firstName + "</td><td>" + item.lastName + "</td><td>" + item.email + "</td><td>" + item.phoneNumber + "</td><td>" + item.city + "</td><td>" + item.state + "</td><td>" + item.zip + "</td><td>" + contactType + "</td><td> <button type='button' id='button" + buttonID +"'>Delete!</button> </td></tr>" );
+        tableRowHeader = "<tr class='active'><td>"
     }
 
-    var btn = document.getElementById("button" + buttonID);
+      $(table).find('tbody').append( tableRowHeader + nullToEmptyStr(item.firstName) + "</td><td>" + nullToEmptyStr(item.lastName) + "</td><td>" + nullToEmptyStr(item.email) + "</td><td>" + nullToEmptyStr(item.phoneNumber) + "</td><td>" + nullToEmptyStr(item.city) + "</td><td>" + nullToEmptyStr(item.state) + "</td><td>" + (item.zip == 0 ? '' : item.zip ) + "</td><td>" + contactType + "</td><td> <button type='button' id='button" + buttonID +"'>Delete!</button> </td></tr>");
+
+      var btn = document.getElementById("button" + buttonID);
     btn.onclick = function(){Delete(item.id)};
 
     buttonID = buttonID + 1;
@@ -253,13 +256,13 @@ function findCheckedOption()
 
 function addContact()
 {
-  var fName  = encodeURI(document.getElementById("firstName").value);
-  var lName = encodeURI(document.getElementById("lastName").value);
+  var fName  = (document.getElementById("firstName").value);
+  var lName = (document.getElementById("lastName").value);
   var email = (document.getElementById("email").value);
-  var pNum = encodeURI(document.getElementById("phoneNum").value);
-  var city = encodeURI(document.getElementById("city").value);
-  var state = encodeURI(document.getElementById("state").value);
-  var zipCode = encodeURI(document.getElementById("zip").value);
+  var pNum = (document.getElementById("phoneNum").value);
+  var city = (document.getElementById("city").value);
+  var state = (document.getElementById("state").value);
+  var zipCode = (document.getElementById("zip").value);
   var contactType = findCheckedOption();
 
   // regex patterns
@@ -378,4 +381,11 @@ function checkIDCookie(){
       //simulate doLogin function
       getAllContacts();
   }
+}
+
+function nullToEmptyStr(variable){
+  if (variable === null)
+      return '';
+  else
+      return variable;
 }

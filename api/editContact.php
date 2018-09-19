@@ -15,15 +15,22 @@
 
         // Get and prepare fields for SQL Query
         $xID = $xhrRequest[ContactFields::ID];
-        $xFirstName = $xhrRequest[ContactFields::FIRST_NAME];
-        $xLastName = $xhrRequest[ContactFields::LAST_NAME];
-        $xEmail = $xhrRequest[ContactFields::EMAIL];
-        $xPhone = $xhrRequest[ContactFields::PHONE];
-        $xContactType = $xhrRequest[ContactFields::CONTACT_TYPE];
-        $xCity = $xhrRequest[ContactFields::CITY];
-        $xState = $xhrRequest[ContactFields::STATE];
-        $xZip = $xhrRequest[ContactFields::ZIP];
-        $xOwnerID = $xhrRequest[ContactFields::OWNER_ID];
+        $xFirstName = filter_var([ContactFields::FIRST_NAME], FILTER_SANITIZE_STRING);
+        $xLastName = filter_var($xhrRequest[ContactFields::LAST_NAME], FILTER_SANITIZE_STRING);
+        $xEmail = filter_var($xhrRequest[ContactFields::EMAIL], FILTER_SANITIZE_EMAIL);
+        $xPhone = filter_var($xhrRequest[ContactFields::PHONE], FILTER_SANITIZE_STRING);
+        $xContactType = filter_var($xhrRequest[ContactFields::CONTACT_TYPE], FILTER_SANITIZE_STRING);
+        $xCity = filter_var($xhrRequest[ContactFields::CITY], FILTER_SANITIZE_STRING);
+        $xState = filter_var($xhrRequest[ContactFields::STATE], FILTER_SANITIZE_STRING);
+        $xZip = filter_var($xhrRequest[ContactFields::ZIP], FILTER_SANITIZE_NUMBER_INT);
+        $xOwnerID = filter_var($xhrRequest[ContactFields::OWNER_ID], FILTER_SANITIZE_NUMBER_INT);
+
+        //check filters
+        if (didFailFilter($xFirstName, $xLastName, $xEmail, $xPhone, $xContactType, $xCity, $xState, $xZip, $xOwnerID)){
+            error_log("User Fields didnt pass santitation");
+            returnError(null);
+        }
+
 
         // Connect to database
         $sqlConnection = new mysqli('localhost', dbinfo::$dbUser, dbinfo::$dbPass, dbinfo::$db);
